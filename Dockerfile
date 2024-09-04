@@ -11,7 +11,7 @@ COPY . .
 # RUN pip install -r requirements.txt
 
 # Stage 2: Create a minimal scratch-like container
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Copy the source code from the builder stage
 COPY --from=builder /app /app
