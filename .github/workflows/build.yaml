@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t <your-dockerhub-username>/cd:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/cd:${{ github.sha }} .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
