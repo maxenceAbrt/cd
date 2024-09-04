@@ -22,6 +22,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  dependency-check:
+    needs: sonarcloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install NPM dependencies
+        run: |
+          npm install --production --unsafe-perm
+
+      - name: Run OWASP Dependency Check
+        uses: sburris/dependency-check-action@master
+        with:
+          Project-Name: maxenceAbrt-cd
+          Report-Format: 'ALL'
+          Report-Location: '/github/workspace/reports'
+
+      - name: Archive dependency check reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: reports
+
   build-deploy:
     needs: dependency-check
     runs-on: ubuntu-latest
