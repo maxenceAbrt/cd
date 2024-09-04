@@ -41,7 +41,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push <your-dockerhub-username>/cd:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/cd:${{ github.sha }}
 
       - name: Deploy to AWS
         run: |
